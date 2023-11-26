@@ -1,0 +1,70 @@
+server:
+  port: 8181
+
+logging:
+  level:
+    com.food.ordering.system: DEBUG # debug dediğimiz zaman bütün logları gösterir. info dediğimiz zaman info ve error loglarını gösterir. error dediğimiz zaman sadece error loglarını gösterir.
+
+order-service:
+  payment-request-topic-name: payment-request
+  payment-response-topic-name: payment-response
+  restaurant-approval-request-topic-name: restaurant-approval-request
+  restaurant-approval-response-topic-name: restaurant-approval-response
+
+spring:
+  jpa:
+    open-in-view: false # bu özellik false olunca hibernate session açıp kapatıyor. true olunca açıp kapatmıyor. faydası ise performans artışı.
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=order&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+      platform: postgres
+      schema-locations: classpath:init-schema.sql
+      mode: always
+
+kafka-config:
+  bootstrap-servers: localhost:19092, localhost:29092, localhost:39092 # bootstrap server kafka brokerlerine bağlanmak için kullanılır.
+  schema-registry-url-key: schema.registry.url
+  schema-registry-url: http://localhost:8081
+  num-of-partitions: 3 # topiclerin kaç partition olacağını belirler.
+  replication-factor: 3 # topiclerin kaç replica olacağını belirler.
+
+kafka-producer-config:
+  key-serializer-class: org.apache.kafka.common.serialization.StringSerializer # key olarak string kullanacağımızı belirtiyoruz. key olarak string kullanmamızın sebebi partition'ları belirlemek için.
+  value-serializer-class: io.confluent.kafka.serializers.KafkaAvroSerializer # value olarak avro kullanacağımızı belirtiyoruz. avro kullanmamızın sebebi schema registry kullanmak.
+  compression-type: snappy # producer'ın gönderdiği mesajları sıkıştırıyor. snappy, gzip, lz4 gibi sıkıştırma algoritmaları var.
+  acks: all # producer'ın mesajı gönderdiğinde broker'ın cevap vermesini bekliyoruz. all dersek broker'ın cevap vermesini bekliyoruz. 0 dersek broker'ın cevap vermesini beklemeden devam ediyoruz.
+  batch-size: 16384 # producer'ın mesajları batch halinde göndermesini sağlıyor. batch halinde göndermek performansı arttırıyor.
+  batch-size-boost-factor: 100 # batch size'ı 16kb'dan 1.6mb'a çıkartıyor.
+  linger-ms: 5 # producer'ın mesajları batch halinde göndermesini sağlıyor. linger ms'de producer'ın mesajları batch halinde göndermesini sağlıyor. 5 ms'de producer'ın mesajları batch halinde göndermesini sağlıyor.
+  request-timeout-ms: 60000 # producer'ın mesajları gönderirken timeout süresi. 60 saniye.
+  retry-count: 5 # producer'ın mesajları gönderirken retry sayısı. 5 kere deneyecek.
+
+kafka-consumer-config:
+  key-deserializer: org.apache.kafka.common.serialization.StringDeserializer # key olarak string kullanacağımızı belirtiyoruz. key olarak string kullanmamızın sebebi partition'ları belirlemek için.
+  value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer # value olarak avro kullanacağımızı belirtiyoruz. avro kullanmamızın sebebi schema registry kullanmak.
+  payment-consumer-group-id: payment-topic-consumer
+  restaurant-approval-consumer-group-id: restaurant-approval-topic-consumer
+  customer-group-id: customer-topic-consumer
+  auto-offset-reset: earliest # consumer'ın topic'e bağlandığında topic'te bulunan mesajları okumaya başlaması için earliest kullanıyoruz. latest dersek topic'e bağlandığında topic'te bulunan mesajları okumaya başlaması için en son mesajdan başlar.
+  specific-avro-reader-key: specific.avro.reader # avro mesajları okurken avro mesajlarını okumak için kullanıyoruz.
+  specific-avro-reader: true # avro mesajları okurken avro mesajlarını okumak için kullanıyoruz.
+  batch-listener: true # consumer'ın mesajları batch halinde okumasını sağlıyor. batch halinde okumak performansı arttırıyor.
+  auto-startup: true # consumer'ın uygulama başladığında çalışmasını sağlıyor.
+  concurrency-level: 3 # consumer'ın kaç thread ile çalışacağını belirliyoruz.
+  session-timeout-ms: 10000 # consumer'ın session timeout süresi. 10 saniye.
+  heartbeat-interval-ms: 3000 # consumer'ın heartbeat süresi. 3 saniye.
+  max-poll-interval-ms: 300000 # consumer'ın max poll süresi. 5 dakika.
+  max-poll-records: 500 # consumer'ın max poll records sayısı. 100 tane mesajı okuyor.
+  max-partition-fetch-bytes-default: 1048576 # consumer'ın max partition fetch bytes sayısı. 50 mb.
+  max-partition-fetch-bytes-boost-factor: 1 # consumer'ın max partition fetch bytes sayısı. 50 mb.
+  poll-timeout-ms: 150 # consumer'ın poll timeout süresi. 150 ms.
