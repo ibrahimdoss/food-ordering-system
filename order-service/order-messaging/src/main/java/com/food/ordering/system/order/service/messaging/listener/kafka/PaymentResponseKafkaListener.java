@@ -50,6 +50,5 @@ public class PaymentResponseKafkaListener implements KafkaConsumer<PaymentRespon
                         .paymentResponseAvroModelToPaymentResponse(paymentResponseAvroModel));
             }
         });
-
     }
 }
