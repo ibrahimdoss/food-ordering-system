@@ -6,22 +6,22 @@ import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
 import com.food.ordering.system.restaurant.service.domain.valueobject.OrderApprovalId;
 
-public class OrderApproval extends BaseEntity<OrderApprovalId>{
-
+public class OrderApproval extends BaseEntity<OrderApprovalId> {
     private final RestaurantId restaurantId;
     private final OrderId orderId;
     private final OrderApprovalStatus approvalStatus;
 
     private OrderApproval(Builder builder) {
         setId(builder.orderApprovalId);
+        restaurantId = builder.restaurantId;
         orderId = builder.orderId;
         approvalStatus = builder.approvalStatus;
-        restaurantId = builder.restaurantId;
     }
 
     public static Builder builder() {
         return new Builder();
     }
+
 
     public RestaurantId getRestaurantId() {
         return restaurantId;
@@ -35,21 +35,22 @@ public class OrderApproval extends BaseEntity<OrderApprovalId>{
         return approvalStatus;
     }
 
-
-
     public static final class Builder {
-        private RestaurantId restaurantId;
         private OrderApprovalId orderApprovalId;
+        private RestaurantId restaurantId;
         private OrderId orderId;
         private OrderApprovalStatus approvalStatus;
 
         private Builder() {
         }
 
-
-
         public Builder orderApprovalId(OrderApprovalId val) {
             orderApprovalId = val;
+            return this;
+        }
+
+        public Builder restaurantId(RestaurantId val) {
+            restaurantId = val;
             return this;
         }
 
@@ -60,11 +61,6 @@ public class OrderApproval extends BaseEntity<OrderApprovalId>{
 
         public Builder approvalStatus(OrderApprovalStatus val) {
             approvalStatus = val;
-            return this;
-        }
-
-        public Builder restaurantId(RestaurantId restaurantId) {
-            restaurantId = restaurantId;
             return this;
         }
 

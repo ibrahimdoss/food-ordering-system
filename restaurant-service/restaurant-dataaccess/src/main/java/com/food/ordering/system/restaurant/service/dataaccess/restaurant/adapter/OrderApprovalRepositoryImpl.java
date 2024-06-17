@@ -20,8 +20,7 @@ public class OrderApprovalRepositoryImpl implements OrderApprovalRepository {
 
     @Override
     public OrderApproval save(OrderApproval orderApproval) {
-        return restaurantDataAccessMapper
-                .orderApprovalEntityToOrderApproval(orderApprovalJpaRepository
+        return restaurantDataAccessMapper.orderApprovalEntityToOrderApproval(orderApprovalJpaRepository
                         .save(restaurantDataAccessMapper.orderApprovalToOrderApprovalEntity(orderApproval)));
     }
 }

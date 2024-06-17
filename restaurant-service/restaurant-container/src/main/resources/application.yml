@@ -8,6 +8,8 @@ logging:
 restaurant-service:
     restaurant-approval-request-topic-name: restaurant-approval-request
     restaurant-approval-response-topic-name: restaurant-approval-response
+    outbox-scheduler-fixed-rate: 10000
+    outbox-scheduler-initial-delay: 10000
 
 spring:
   jpa:
@@ -52,7 +54,6 @@ kafka-consumer-config:
   key-deserializer: org.apache.kafka.common.serialization.StringDeserializer # key olarak string kullanacağımızı belirtiyoruz. key olarak string kullanmamızın sebebi partition'ları belirlemek için.
   value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer # value olarak avro kullanacağımızı belirtiyoruz. avro kullanmamızın sebebi schema registry kullanmak.
   restaurant-approval-consumer-group-id: restaurant-approval-topic-consumer
-  customer-group-id: customer-topic-consumer
   auto-offset-reset: earliest # consumer'ın topic'e bağlandığında topic'te bulunan mesajları okumaya başlaması için earliest kullanıyoruz. latest dersek topic'e bağlandığında topic'te bulunan mesajları okumaya başlaması için en son mesajdan başlar.
   specific-avro-reader-key: specific.avro.reader # avro mesajları okurken avro mesajlarını okumak için kullanıyoruz.
   specific-avro-reader: true # avro mesajları okurken avro mesajlarını okumak için kullanıyoruz.

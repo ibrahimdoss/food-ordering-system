@@ -10,6 +10,12 @@
     </parent>
 
     <artifactId>payment-domain</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>payment-application-service</module>
+        <module>payment-domain-core</module>
+    </modules>
 
 
 </project>

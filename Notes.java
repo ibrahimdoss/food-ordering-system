@@ -1,5 +1,7 @@
 public class Notes {
 
+    //bölüm : 9 74 -> 11.50'den sonra
+
     // pom packaging ile jar packaging arasındaki farklar şunlardır:
     // pom packaging: proje paketlenmez, sadece proje için gerekli olan bağımlılıklar paketlenir.
     // jar packaging: proje paketlenir, proje için gerekli olan bağımlılıklar paketlenir.
