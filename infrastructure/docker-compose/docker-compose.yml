@@ -112,22 +112,25 @@ services:
     networks:
       food_ordering_system_network:
   postgres:
-    container_name: order_system
-    image: postgres
-    depends_on:
-      - zookeeper
-      - kafka-broker-1
-      - kafka-broker-2
-      - kafka-broker-3
-    restart: always
+    image: debezium/example-postgres:2.6
+    container_name: postgres
     ports:
-      - "5444:5432"
-    environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "admin"
-      POSTGRES_DB: "postgres"
+      - 5444:5432
+    command:
+      - "postgres"
+      - "-c"
+      - "max_connections=200"
+      - "-c"
+      - "max_replication_slots=4"
+      - "-c"
+      - "wal_level=logical"
     volumes:
       - "./volumes/postgres:/var/lib/postgresql/data"
+    environment:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=admin"
+    networks:
+      food_ordering_system_network:
   init-kafka:
     image: confluentinc/cp-kafka:${KAFKA_VERSION}
     entrypoint: [ '/bin/sh', '-c' ]
@@ -150,6 +153,10 @@ services:
       kafka-topics --bootstrap-server kafka-broker-1:9092 --topic restaurant-approval-request --delete --if-exists
       kafka-topics --bootstrap-server kafka-broker-1:9092 --topic restaurant-approval-response --delete --if-exists
       kafka-topics --bootstrap-server kafka-broker-1:9092 --topic customer --delete --if-exists
+      kafka-topics --bootstrap-server kafka-broker-1:9092 --topic debezium.order.payment_outbox --delete --if-exists
+      kafka-topics --bootstrap-server kafka-broker-1:9092 --topic debezium.order.restaurant_approval_outbox --delete --if-exists
+      kafka-topics --bootstrap-server kafka-broker-1:9092 --topic debezium.payment.order_outbox --delete --if-exists
+      kafka-topics --bootstrap-server kafka-broker-1:9092 --topic debezium.restaurant.order_outbox --delete --if-exists
       
       echo -e 'Creating kafka topics'
       kafka-topics --bootstrap-server kafka-broker-1:9092 --create --if-not-exists --topic payment-request --replication-factor 3 --partitions 3
@@ -157,6 +164,10 @@ services:
       kafka-topics --bootstrap-server kafka-broker-1:9092 --create --if-not-exists --topic restaurant-approval-request --replication-factor 3 --partitions 3
       kafka-topics --bootstrap-server kafka-broker-1:9092 --create --if-not-exists --topic restaurant-approval-response --replication-factor 3 --partitions 3
       kafka-topics --bootstrap-server kafka-broker-1:9092 --create --if-not-exists --topic customer --replication-factor 3 --partitions 3
+      kafka-topics --bootstrap-server kafka-broker-1:9092 --create --if-not-exists --topic debezium.order.payment_outbox --replication-factor 3 --partitions 3
+      kafka-topics --bootstrap-server kafka-broker-1:9092 --create --if-not-exists --topic debezium.order.restaurant_approval_outbox --replication-factor 3 --partitions 3
+      kafka-topics --bootstrap-server kafka-broker-1:9092 --create --if-not-exists --topic debezium.payment.order_outbox --replication-factor 3 --partitions 3
+      kafka-topics --bootstrap-server kafka-broker-1:9092 --create --if-not-exists --topic debezium.restaurant.order_outbox --replication-factor 3 --partitions 3
       
       
       echo -e 'Sucessfully created the following topics:'
@@ -181,8 +192,38 @@ services:
       KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
     networks:
       food_ordering_system_network:
+  # debezium connector
+  kafka-debezium-connector:
+    image: debezium/connect:${DEBEZIUM_VERSION}
+    ports:
+      - "8083:8083"
+    environment:
+      GROUP_ID: "1"
+      CONFIG_STORAGE_TOPIC: "connect-config"
+      OFFSET_STORAGE_TOPIC: "connect-offsets"
+      STATUS_STORAGE_TOPIC: "connect-status"
+      BOOTSTRAP_SERVERS: "kafka-broker-1:9092,kafka-broker-2:9092,kafka-broker-3:9092"
+      LOGGING_LEVEL: "DEBUG"
+      CONNECT_SCHEMA_NAME_ADJUSTMENT_MODE: "avro"
+      KEY_CONVERTER: "io.confluent.connect.avro.AvroConverter"
+      VALUE_CONVERTER: "io.confluent.connect.avro.AvroConverter"
+      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
+    depends_on:
+      - kafka-broker-1
+      - kafka-broker-2
+      - kafka-broker-3
+      - schema-registry
+    volumes:
+      - "/home/ibrahim/Documents/debezium-connector-schemaregistry-7.2.5:/kafka/connect/debezium-connector-schemaregistry-7.2.5"
+    networks:
+      food_ordering_system_network:
 
 networks:
   food_ordering_system_network:
     driver: bridge
 # sudo rm -r version-2
+
+
+
+
