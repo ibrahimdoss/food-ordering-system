@@ -1,59 +1,60 @@
 #!/bin/bash
 
-echo "Starting Zookeeper and Kafka Cluster"
+echo "Starting Zookeeper"
 
-# Start Zookeeper and Kafka using a single docker-compose file
-docker-compose up -d zookeeper kafka
+# start zookeeper
+docker-compose -f common.yml -f docker-compose.yml up -d
 
-# Check Zookeeper health
+# check zookeeper health
 zookeeperCheckResult=$(echo ruok | nc localhost 2181)
+
 while [[ ! $zookeeperCheckResult == "imok" ]]; do
   >&2 echo "Zookeeper is not running yet!"
   sleep 2
   zookeeperCheckResult=$(echo ruok | nc localhost 2181)
 done
 
-echo "Zookeeper is up and running!"
+echo "Starting Kafka cluster"
 
-# Check Kafka health
+# start kafka
+docker-compose -f common.yml -f docker-compose.yml up -d
+
+# check kafka health
 kafkaCheckResult=$(kcat -L -b localhost:19092 | grep '3 brokers:')
+
 while [[ ! $kafkaCheckResult == " 3 brokers:" ]]; do
   >&2 echo "Kafka cluster is not running yet!"
   sleep 2
   kafkaCheckResult=$(kcat -L -b localhost:19092 | grep '3 brokers:')
 done
 
-echo "Kafka cluster is up and running!"
+echo "Creating Kafka topics"
 
-echo "Creating Kafka topics and starting services"
+# start kafka init
+docker-compose -f common.yml -f docker-compose.yml up -d
 
-# Start Kafka initial setup and other services
-docker-compose up -d init_kafka other_services
-
-# Check topics in Kafka
+# check topics in kafka
 kafkaTopicCheckResult=$(kcat -L -b localhost:19092 | grep 'debezium.restaurant.order_outbox')
+
 while [[ $kafkaTopicCheckResult == "" ]]; do
   >&2 echo "Kafka topics are not created yet!"
   sleep 2
-  kafkaTopicProfileCheckResult=$(kcat -L -b localhost:19092 | grep 'debezium.restaurant.order_outbox')
+  kafkaTopicCheckResult=$(kcat -L -b localhost:19092 | grep 'debezium.restaurant.order_outbox')
 done
 
-echo "Kafka topics have been created!"
-
-# Check Debezium
+# check debezium
 servicesCheckResult=$(curl -s -o /dev/null -I -w "%{http_code}" http://localhost:8083)
-echo "Result status code:" "$servicesCheckResult"
+
+echo "Result status code:" "$curlResult"
+
 while [[ ! $servicesCheckResult == "200" ]]; do
   >&2 echo "Debezium is not running yet!"
   sleep 2
   servicesCheckResult=$(curl -s -o /dev/null -I -w "%{http_code}" http://localhost:8083)
 done
 
-echo "Debezium is up and running!"
+echo "Creating debezium connectors"
 
-echo "Creating Debezium connectors"
-
-# Commands to create Debezium connectors
 curl --location --request POST 'localhost:8083/connectors' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -74,9 +75,8 @@ curl --location --request POST 'localhost:8083/connectors' \
       "plugin.name": "pgoutput",
       "auto.create.topics.enable": false,
       "auto.register.schemas": false
-  }
-}'
-
+      }
+ }'
 
 curl --location --request POST 'localhost:8083/connectors' \
 --header 'Content-Type: application/json' \
