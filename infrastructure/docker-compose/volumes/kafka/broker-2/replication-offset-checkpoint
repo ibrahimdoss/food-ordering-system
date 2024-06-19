@@ -64,7 +64,7 @@ __consumer_offsets 3 0
 __consumer_offsets 17 0
 __consumer_offsets 39 0
 payment-request 1 0
-connect-config 0 29
+connect-config 0 30
 __consumer_offsets 2 6
 debezium.restaurant.order_outbox 1 0
 connect-status 3 0

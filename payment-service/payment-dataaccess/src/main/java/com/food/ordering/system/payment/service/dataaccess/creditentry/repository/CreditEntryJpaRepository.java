@@ -12,7 +12,7 @@ import java.util.UUID;
 @Repository
 public interface CreditEntryJpaRepository extends JpaRepository<CreditEntryEntity, UUID> {
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE) //islem sirasinda baska bir thread'in bu kaydi okumasini engeller yani transactional bir islem yapar
+    //@Lock(LockModeType.PESSIMISTIC_WRITE) //islem sirasinda baska bir thread'in bu kaydi okumasini engeller yani transactional bir islem yapar
     // bu kayıt üzerinde işlem yaparken başka bir thread bu kaydı okuyamaz
     Optional<CreditEntryEntity> findByCustomerId(UUID customerId);
 

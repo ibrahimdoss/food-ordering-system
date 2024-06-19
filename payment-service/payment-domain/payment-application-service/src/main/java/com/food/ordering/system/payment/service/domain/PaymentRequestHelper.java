@@ -37,8 +37,6 @@ public class PaymentRequestHelper {
     private final OrderOutboxHelper orderOutboxHelper;
 
 
-
-
     public PaymentRequestHelper(PaymentDomainService paymentDomainService, PaymentDataMapper paymentDataMapper, PaymentRepository paymentRepository, CreditEntryRepository creditEntryRepository, CreditHistoryRepository creditHistoryRepository, OrderOutboxHelper orderOutboxHelper) {
         this.paymentDomainService = paymentDomainService;
         this.paymentDataMapper = paymentDataMapper;
@@ -50,11 +48,11 @@ public class PaymentRequestHelper {
     }
 
     @Transactional
-    public void persistPayment(PaymentRequest paymentRequest){
+    public boolean persistPayment(PaymentRequest paymentRequest) {
         if (isOutboxMessageProcessedForPayment(paymentRequest, PaymentStatus.COMPLETED)) {
             log.info("An outbox message with saga id: {} is already saved to database!",
                     paymentRequest.getSagaId());
-            return;
+            return true;
         }
 
         log.info("Received payment complete event for order id: {}", paymentRequest.getOrderId());
@@ -63,12 +61,24 @@ public class PaymentRequestHelper {
         List<CreditHistory> creditHistories = getCreditHistory(payment.getCustomerId());
         List<String> failureMessages = new ArrayList<>();
         PaymentEvent paymentEvent = paymentDomainService.validateAndInitiatePayment(payment, creditEntry, creditHistories, failureMessages);
-        persistDbObjects(payment, creditEntry, creditHistories, failureMessages);
 
-        orderOutboxHelper.saveOrderOutboxMessage(paymentDataMapper.paymentEventToOrderEventPayload(paymentEvent),
-                paymentEvent.getPayment().getPaymentStatus(),
-                OutboxStatus.STARTED,
-                UUID.fromString(paymentRequest.getSagaId()));
+        boolean isSucceeded = true;
+        if (!failureMessages.isEmpty()) {
+            int version = creditEntry.getVersion();
+            creditEntryRepository.detach(payment.getCustomerId());
+            getCreditEntry(payment.getCustomerId());
+            isSucceeded = version == creditEntry.getVersion();
+        }
+
+        if (isSucceeded) {
+            persistDbObjects(payment, creditEntry, creditHistories, failureMessages);
+            orderOutboxHelper.saveOrderOutboxMessage(paymentDataMapper.paymentEventToOrderEventPayload(paymentEvent),
+                    paymentEvent.getPayment().getPaymentStatus(),
+                    OutboxStatus.STARTED,
+                    UUID.fromString(paymentRequest.getSagaId()));
+        }
+        return isSucceeded;
+
 
     }
 
@@ -84,7 +94,7 @@ public class PaymentRequestHelper {
     }
 
     @Transactional
-    public void persistCancelPayment(PaymentRequest paymentRequest){
+    public void persistCancelPayment(PaymentRequest paymentRequest) {
         if (isOutboxMessageProcessedForPayment(paymentRequest, PaymentStatus.CANCELLED)) {
             log.info("An outbox message with saga id: {} is already saved to database!",
                     paymentRequest.getSagaId());
@@ -94,7 +104,7 @@ public class PaymentRequestHelper {
         log.info("Received payment cancel event for order id: {}", paymentRequest.getOrderId());
         Optional<Payment> paymentResponse = paymentRepository.findByOrderId(UUID.fromString(paymentRequest.getOrderId()));
 
-        if (paymentResponse.isEmpty()){
+        if (paymentResponse.isEmpty()) {
             log.error("Payment with order id: {} could not ne found!", paymentRequest.getOrderId());
             throw new PaymentNotFoundException("Payment with order id: " + paymentRequest.getOrderId() + " could not be found!");
         }
@@ -113,10 +123,9 @@ public class PaymentRequestHelper {
     }
 
 
-
     private CreditEntry getCreditEntry(CustomerId customerId) {
         Optional<CreditEntry> creditEntry = creditEntryRepository.findByCustomerId(customerId);
-        if(creditEntry.isEmpty()){
+        if (creditEntry.isEmpty()) {
             log.error("Could not find credit entry for customer: {}", customerId.getValue());
             throw new PaymentApplicationServiceException("Could not find credit entry for customer: " + customerId.getValue());
         }
