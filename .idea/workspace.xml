@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9bb2c8ce-3356-45cd-aa7c-527d11d4adad" name="Changes" comment="change data capture before" />
+    <list default="true" id="9bb2c8ce-3356-45cd-aa7c-527d11d4adad" name="Changes" comment="change data capture before">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/images/change-data-capture-debezium.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/images/outbox-cdc.png" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -560,7 +564,7 @@
       <workItem from="1718648758523" duration="15089000" />
       <workItem from="1718714648815" duration="23945000" />
       <workItem from="1718806627403" duration="8649000" />
-      <workItem from="1721587334003" duration="8104000" />
+      <workItem from="1721587334003" duration="8738000" />
     </task>
     <task id="LOCAL-00001" summary="outbox giris">
       <option name="closed" value="true" />
@@ -602,7 +606,23 @@
       <option name="project" value="LOCAL" />
       <updated>1721597169777</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="change data capture before">
+      <option name="closed" value="true" />
+      <created>1721597383634</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1721597383634</updated>
+    </task>
+    <task id="LOCAL-00007" summary="change data capture before">
+      <option name="closed" value="true" />
+      <created>1721597443800</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1721597443800</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
