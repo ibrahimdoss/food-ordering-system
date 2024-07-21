@@ -110,7 +110,7 @@ order-service
 
 ## Module Dependency Diagram
 
-![dependency-module diagram](docs/images/dependency-graph.png)
+![dependency-module diagram](.//docs/images/dependency-graph.png)
 
 
 ## Test scenario
