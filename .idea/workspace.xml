@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9bb2c8ce-3356-45cd-aa7c-527d11d4adad" name="Changes" comment="change data capture before">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/images/change-data-capture-debezium.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/images/outbox-cdc.png" beforeDir="false" />
-    </list>
+    <list default="true" id="9bb2c8ce-3356-45cd-aa7c-527d11d4adad" name="Changes" comment="change data capture before" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -75,64 +71,64 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Docker.docker-compose/init_kafka.yml.init-kafka: Compose Deployment.executor": "Run",
-    "Docker.docker-compose/init_kafka.yml: Compose Deployment.executor": "Run",
-    "Docker.docker-compose: Compose Deployment.executor": "Run",
-    "JUnit.OrderApplicationServiceTest.executor": "Run",
-    "JUnit.OrderApplicationServiceTest.testCreateOrder.executor": "Run",
-    "JUnit.OrderApplicationServiceTest.testCreateOrderWithWrongProductPrice.executor": "Run",
-    "JUnit.OrderApplicationServiceTest.testCreateOrderWithWrongTotalPrice.executor": "Run",
-    "JUnit.OrderPaymentSagaTest.executor": "Run",
-    "JUnit.OrderPaymentSagaTest.testDoublePayment.executor": "Run",
-    "JUnit.OrderPaymentSagaTest.testDoublePaymentWithLatch.executor": "Run",
-    "JUnit.OrderPaymentSagaTest.testDoublePaymentWithThreads.executor": "Run",
-    "JUnit.PaymentRequestMessageListenerTest.testDoublePayment.executor": "Run",
-    "JUnit.PaymentRequestMessageListenerTest.testDoublePaymentWithThreads.executor": "Run",
-    "Maven.common [clean,install].executor": "Run",
-    "Maven.customer-application [clean,install].executor": "Run",
-    "Maven.customer-application [clean].executor": "Run",
-    "Maven.customer-application [install].executor": "Run",
-    "Maven.customer-service [clean,install,-U].executor": "Run",
-    "Maven.customer-service [clean,install].executor": "Run",
-    "Maven.food-ordering-system [clean,install,-U].executor": "Run",
-    "Maven.food-ordering-system [clean,install].executor": "Run",
-    "Maven.kafka-model [clean,install].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.CustomerServiceApplication.executor": "Run",
-    "Spring Boot.OrderServiceApplication (1).executor": "Run",
-    "Spring Boot.OrderServiceApplication (2).executor": "Run",
-    "Spring Boot.OrderServiceApplication.executor": "Run",
-    "Spring Boot.PaymentServiceApplication (1).executor": "Run",
-    "Spring Boot.PaymentServiceApplication (2).executor": "Run",
-    "Spring Boot.PaymentServiceApplication.executor": "Run",
-    "Spring Boot.RestaurantServiceApplication (1).executor": "Run",
-    "Spring Boot.RestaurantServiceApplication (2).executor": "Run",
-    "Spring Boot.RestaurantServiceApplication.executor": "Run",
-    "WebServerToolWindowFactoryState": "false",
-    "jdk.selected.JAVA_MODULE": "corretto-17",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/ibrahim/Desktop/MicroService/projects/food-ordering-system/food-ordering-system/docs/images",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "spring.configuration.checksum": "58d32cdcd53cdd8e9a8675b8427f35e6",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Docker.docker-compose/init_kafka.yml.init-kafka: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose/init_kafka.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrderApplicationServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrderApplicationServiceTest.testCreateOrder.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrderApplicationServiceTest.testCreateOrderWithWrongProductPrice.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrderApplicationServiceTest.testCreateOrderWithWrongTotalPrice.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrderPaymentSagaTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrderPaymentSagaTest.testDoublePayment.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrderPaymentSagaTest.testDoublePaymentWithLatch.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OrderPaymentSagaTest.testDoublePaymentWithThreads.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PaymentRequestMessageListenerTest.testDoublePayment.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PaymentRequestMessageListenerTest.testDoublePaymentWithThreads.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.common [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.customer-application [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.customer-application [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.customer-application [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.customer-service [clean,install,-U].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.customer-service [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.food-ordering-system [clean,install,-U].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.food-ordering-system [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.kafka-model [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.CustomerServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.OrderServiceApplication (1).executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.OrderServiceApplication (2).executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.OrderServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.PaymentServiceApplication (1).executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.PaymentServiceApplication (2).executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.PaymentServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.RestaurantServiceApplication (1).executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.RestaurantServiceApplication (2).executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.RestaurantServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-17&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/ibrahim/Desktop/MicroService/projects/food-ordering-system/food-ordering-system/docs/images&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;58d32cdcd53cdd8e9a8675b8427f35e6&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.food.ordering.system.order.service.application.exception.handler" />
@@ -565,6 +561,7 @@
       <workItem from="1718714648815" duration="23945000" />
       <workItem from="1718806627403" duration="8649000" />
       <workItem from="1721587334003" duration="8738000" />
+      <workItem from="1721633791383" duration="588000" />
     </task>
     <task id="LOCAL-00001" summary="outbox giris">
       <option name="closed" value="true" />

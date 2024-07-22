@@ -1,3 +1,11 @@
+# Java dosyaları için
 *.java linguist-language=Java
+
+# XML dosyaları için
 *.xml linguist-language=XML
+
+# PL/SQL dosyaları için
 *.sql linguist-language=PLSQL
+
+# Proje genelini Java olarak işaretleme
+*.java linguist-detectable=true
